@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+    <head lang="en">
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
+        <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+        <script src="http://cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+        <script src="http://cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+        <title>定时任务</title>
+    </head>
+    <body>
+        <div class="page-header" id="tou" style="text-align: center;">
+            	定时任务
+        </div>
+        <div style="padding-left: 300px; padding-right: 300px; padding-bottom: 15px;">
+        	<input type="text" class="form-control" placeholder="请输入定时任务名称" id="quartzName"/>
+        </div>
+        <div style="padding-left: 300px; padding-right: 300px; padding-bottom: 15px;">
+        	<input type="text" class="form-control" placeholder="请输入bean名称" id="beanName"/>
+        </div>
+        <div style="padding-left: 300px; padding-right: 300px; padding-bottom: 15px;">
+        	<input type="text" class="form-control" placeholder="请输入方法名称" id="methodName"/>
+        </div>
+        <div style="padding-left: 300px; padding-right: 300px; padding-bottom: 15px;">
+        	<input type="text" class="form-control" placeholder="请输入业务id" id="params"/>
+        </div>
+        <div style="padding-left: 300px; padding-right: 300px; padding-bottom: 15px;">
+        	<input type="text" class="form-control" placeholder="请输入cron表达式" id="cronExpression"/>
+        </div>
+        <div style="padding-left: 300px; padding-right: 300px; padding-bottom: 15px;">
+        	<input type="date" class="form-control" placeholder="请输入定时任务起始时间" id="startTime"/>
+        </div>
+        <div style="padding-left: 300px; padding-right: 300px; padding-bottom: 15px;">
+        	<input type="date" class="form-control" placeholder="请输入定时任务结束时间" id="endTime"/>
+        </div>
+        <div class="input-group" style="padding-left: 200px; padding-right: 200px; padding-top: 20px;">
+            <span class="input-group-btn">
+                <button class="btn btn-default" type="button" onclick="submit();">保存</button>
+            </span>
+         </div>
+    </body>
+	<script type="text/javascript">
+		
+	function submit(){
+		var param = {};
+		var quartzName = $("#quartzName").val();
+		if(quartzName != ""){
+			param.quartzName = quartzName;
+		}
+		var beanName = $("#beanName").val();
+		if(beanName != ""){
+			param.beanName = beanName;
+		}
+		var methodName = $("#methodName").val();
+		if(methodName != ""){
+			param.methodName = methodName;
+		}
+		var params = $("#params").val();
+		if(params != ""){
+			param.params = params;
+		}
+		var cronExpression = $("#cronExpression").val();
+		if(cronExpression != ""){
+			param.cronExpression = cronExpression;
+		}
+		var startTime = $("#startTime").val();
+		if(startTime != ""){
+			param.startTime = startTime;
+		}
+		var endTime = $("#endTime").val();
+		if(endTime != ""){
+			param.endTime = endTime;
+		}
+		
+		console.log(param);
+		
+		var path = "http://"+window.location.host;
+		
+		$.ajax({
+			url: path + "/quartz/insert",
+			data:param,
+			type:"GET",
+			contentType:"application/json",
+			dataType:"json",
+			async:true,
+			success:function(result){
+				console.log(result);
+			}
+		});
+	}
+		
+	
+	</script>
+</html>

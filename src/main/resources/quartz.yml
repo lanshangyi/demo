@@ -1,0 +1,17 @@
+org:
+   quartz:
+      scheduler:
+         instanceName: DefaultQuartzScheduler
+         rmi:
+            export: false
+            proxy: false
+         wrapJobExecutionInUserTransaction: false
+         batchTriggerAcquisitionMaxCount: 50
+      threadPool: 
+         class: org.quartz.simpl.SimpleThreadPool
+         threadCount: 10
+         threadPriority: 5
+         threadsInheritContextClassLoaderOfInitializingThread: true
+      jobStore: 
+         misfireThreshold: 60000
+         class: org.quartz.simpl.RAMJobStore

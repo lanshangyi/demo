@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+
+    <head lang="en">
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
+        <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+        <script src="http://cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+        <script src="http://cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+        <title>webSocket-聊天室</title>
+        <script type="text/javascript">
+        	var websocket;
+            $(function() {
+                //回车事件绑定
+                $('#sid').bind('keyup', function(event) {
+    		            　　if (event.keyCode == "13") {
+  		            	if('WebSocket' in window) {
+  		                    console.log("此浏览器支持websocket");
+  		                   // websocket = new WebSocket("ws://lshangyi.qicp.vip/websocket/"+$('#sid').val());
+  		                  	websocket = new WebSocket("ws://localhost:9512/websocket/"+$('#sid').val());
+  		                } else if('MozWebSocket' in window) {
+  		                    alert("此浏览器只支持MozWebSocket");
+  		                } else {
+  		                    alert("此浏览器只支持SockJS");
+  		                }
+  		            	
+  		                websocket.onopen = function(evnt) {
+  		                    $("#tou").html("链接服务器成功!")
+  		                };
+  		                
+  		                websocket.onmessage = function(evnt) {
+  		                	
+  		                	var jsonData = JSON.parse(evnt.data);
+  		                	var msgType = jsonData.msgType;
+  		                	var msg = jsonData.msg;
+  		                	
+  		                	var timestamp = Date.parse(new Date());
+  		                	timestamp = timestamp + "_"+ guid();
+  		                	var p_msg = "<p id=\""+timestamp+"\">"+ msg+"</p>"
+  		                	
+  		                    $("#msg").html($("#msg").html() + p_msg);
+  		                	
+  		                    document.getElementById(timestamp).scrollIntoView(false);
+  		                };
+  		                
+  		                websocket.onerror = function(evnt) {};
+  		                
+  		                websocket.onclose = function(evnt) {
+  		                    $("#tou").html("与服务器断开了链接!")
+  		                }
+  		                
+  		                $('#send').bind('click', function() {
+  		                    send();
+  		                });
+  		                
+  		              $('#send1').bind('click', function() {
+		                    send1();
+		                });
+  		              
+  		            $('#send2').bind('click', function() {
+	                    send2();
+	                });
+    		            　　}
+                });
+                
+                $('#message').bind('keyup', function(event) {
+                	if (event.keyCode == "13") {
+                		send();
+                	}
+                });
+                
+                $('#message1').bind('keyup', function(event) {
+                	if (event.keyCode == "13") {
+                		send1();
+                	}
+                });
+                
+                $('#message2').bind('keyup', function(event) {
+                	if (event.keyCode == "13") {
+                		send2();
+                	}
+                });
+            });
+            
+            function send() {
+                if(websocket != null) {
+                	var str = { "msgType": "text", "msg": $("#message").val() };
+                	str = JSON.stringify(str);
+                    var message = $("#message").val();
+                    websocket.send(str);
+                } else {
+                    alert('未与服务器链接.');
+                }
+                $("#message").val("");
+            }
+            
+            function send1() {
+                if(websocket != null) {
+                	var str = { "msgType": "img", "msg": $("#message1").val() };
+                	str = JSON.stringify(str);
+                    var message = $("#message1").val();
+                    websocket.send(str);
+                } else {
+                    alert('未与服务器链接.');
+                }
+                $("#message").val("");
+            }
+            
+            function send2() {
+                if(websocket != null) {
+                	var str = { "msgType": "video", "msg": $("#message2").val() };
+                	str = JSON.stringify(str);
+                    var message = $("#message2").val();
+                    websocket.send(str);
+                } else {
+                    alert('未与服务器链接.');
+                }
+                $("#message").val("");
+            }
+            
+            function guid() {
+            	return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+            		var r = Math.random() * 16 | 0,
+            			v = c == 'x' ? r : (r & 0x3 | 0x8);
+            		return v.toString(16);
+            	});
+            }
+        </script>
+    </head>
+
+    <body>
+        <div class="page-header" id="tou" style="text-align: center;">
+            webSocket多终端聊天测试
+        </div>
+        <div style="padding-left: 300px; padding-right: 300px; padding-bottom: 15px;">
+        	<input type="text" class="form-control" placeholder="请输入你的ID（测试阶段，随便输入）,回车加入聊天室" id="sid"/>
+        </div>
+        <div class="well" id="msg" style="height:500px; max-height: 500px; overflow: auto;"></div>
+        <div class="col-lg">
+            <div class="input-group" style="padding-left: 200px; padding-right: 200px;">
+                <input type="text" class="form-control" placeholder="发送信息..." id="message">
+                <span class="input-group-btn">
+                    <button class="btn btn-default" type="button" id="send" >发送</button>
+                </span>
+            </div>
+            <div class="input-group" style="padding-left: 200px; padding-right: 200px; padding-top: 20px;">
+                <input type="text" class="form-control" placeholder="发送图片..." id="message1">
+                <span class="input-group-btn">
+                    <button class="btn btn-default" type="button" id="send1" >发送</button>
+                </span>
+            </div>
+            <div class="input-group" style="padding-left: 200px; padding-right: 200px; padding-top: 20px;">
+                <input type="text" class="form-control" placeholder="发送视频..." id="message2">
+                <span class="input-group-btn">
+                    <button class="btn btn-default" type="button" id="send2" >发送</button>
+                </span>
+            </div>
+        </div>
+    </body>
+
+</html>
