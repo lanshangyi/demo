@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.example.demo.dao.BizUserMapper;
 import com.example.demo.model.BizUser;
 import com.example.demo.model.BizUserExample;
+import com.example.demo.model.BizUserExample.Criteria;
 import com.example.demo.service.UserService;
 
 @Transactional(rollbackFor = Exception.class)
@@ -27,11 +28,12 @@ public class UserServiceImpl implements UserService{
 	public List<BizUser> selectByExample(BizUser record) {
 		
 		BizUserExample example = new BizUserExample();
+		Criteria createCriteria = example.createCriteria();
 		if(record.getId() != null) {
-			example.createCriteria().andIdEqualTo(record.getId());
+			createCriteria.andIdEqualTo(record.getId());
 		}
 		if(record.getName() != null) {
-			example.createCriteria().andNameEqualTo(record.getName());
+			createCriteria.andNameEqualTo(record.getName());
 		}
 		
 		return bizUserMapper.selectByExample(example);
