@@ -31,26 +31,20 @@ public class JschMain {
 		
 		Map<JSch,String> map = new HashMap<JSch, String>();
 		//服务器ip地址
-        map.put(new JSch(),"120.76.188.130");
-//        map.put(new JSch(),"11.166.32.1000004");
-//        map.put(new JSch(),"11.166.225.50");
+        map.put(new JSch(),"127.0.0.1");
         Set<JSch> keys = map.keySet();
         for(JSch key: keys) {
             String host = map.get(key);
             String username = "root";  //登录账号
             Session session = key.getSession(username, host, 22);
-            session.setPassword("Aliyun2018!");  //登录密码
+            session.setPassword("123321!");  //登录密码
             session.setConfig("StrictHostKeyChecking", "no");
             session.setTimeout(3000);
             try {
                 session.connect();
                 System.out.println();
                 
-                String command1 = "tail -f  /data/logs/socket/*info_log.log";
-                String command2 = "tail -f /data/logs/gateway/*info_log.log";  //需要抓取的日志
-                String command3 = "tail -f /data/logs/pkt/*info_log.log";  //需要抓取的日志
-                String command4 = "tail -f /data/logs/pl/*info_log.log";  //需要抓取的日志
-                String command5 = "tail -f /data/logs/order/*info_log.log";  //需要抓取的日志
+                String command4 = "tail -f /data/logs/sys/*info_log.log";  //需要抓取的日志
                 
                 ChannelExec channel = (ChannelExec) session.openChannel("exec");
                 channel.setCommand(command4);
@@ -90,7 +84,7 @@ public class JschMain {
 		
 		try {
             //钉钉机器人地址（配置机器人的webhook）
-            String dingUrl = "https://oapi.dingtalk.com/robot/send?access_token=0f89a739d3bf7bbc752bc3d467befa7a3b0d8444343d52397e0d55a054ab1566";
+            String dingUrl = "";
 
             //是否通知所有人
             boolean isAtAll = false;
