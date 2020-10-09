@@ -19,8 +19,11 @@ public class ScheduleTask {
 	@Autowired
 	private BizQuartzService bizQuartzService;
 	
+//	@Scheduled(cron = "0 0 0 * * ?")
     @Scheduled(cron = "0 0/1 * * * ?")
     private void configureTasks() {
+    	//正常是每天凌晨执行查询动态定时任务，测试阶段不讲究那么多
+    	//log.info("每天凌晨执行定时任务: " + LocalDateTime.now());
        log.info("每天隔1分钟执行定时任务: " + LocalDateTime.now());
        bizQuartzService.findQuartzByScheduleTask();
        
