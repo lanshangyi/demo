@@ -2,19 +2,25 @@ package com.example.demo.model;
 
 import java.util.Date;
 
+import javax.validation.constraints.NotNull;
+
 public class BizQuartz {
     private Integer id;
-
+    
+    @NotNull(message = "定时任务名称不能为空")
     private String quartzName;
     
     private Boolean status;
     
+    @NotNull(message = "bean名称不能为空")
     private String beanName;
-
+    
+    @NotNull(message = "方法任务名称不能为空")
     private String methodName;
 
     private String params;
-
+    
+    @NotNull(message = "定时表达式不能为空")
     private String cronExpression;
 
     private String cronExpressionName;

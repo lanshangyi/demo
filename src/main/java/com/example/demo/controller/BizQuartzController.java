@@ -2,6 +2,8 @@ package com.example.demo.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,7 +22,7 @@ public class BizQuartzController {
 	
 	@GetMapping(value="/insert")
     @ResponseBody
-	public int insert(BizQuartz record) {
+	public int insert(@Valid BizQuartz record) {
 		return bizQuartzService.insert(record);
 		
 	}
