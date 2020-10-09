@@ -2,15 +2,13 @@ package com.example.demo.model;
 
 import java.util.Date;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-
 public class BizQuartz {
     private Integer id;
 
     private String quartzName;
-
+    
     private Boolean status;
-
+    
     private String beanName;
 
     private String methodName;
