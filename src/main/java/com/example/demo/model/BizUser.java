@@ -11,6 +11,8 @@ public class BizUser {
 
     private String sex;
 
+    private String images;
+
     public Integer getId() {
         return id;
     }
@@ -49,5 +51,13 @@ public class BizUser {
 
     public void setSex(String sex) {
         this.sex = sex == null ? null : sex.trim();
+    }
+
+    public String getImages() {
+        return images;
+    }
+
+    public void setImages(String images) {
+        this.images = images == null ? null : images.trim();
     }
 }

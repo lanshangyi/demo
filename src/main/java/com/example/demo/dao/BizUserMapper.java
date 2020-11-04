@@ -1,11 +1,9 @@
 package com.example.demo.dao;
 
-import java.util.List;
-
-import org.apache.ibatis.annotations.Param;
-
 import com.example.demo.model.BizUser;
 import com.example.demo.model.BizUserExample;
+import java.util.List;
+import org.apache.ibatis.annotations.Param;
 
 public interface BizUserMapper {
     long countByExample(BizUserExample example);

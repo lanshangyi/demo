@@ -7,6 +7,7 @@
     <result column="account" jdbcType="VARCHAR" property="account" />
     <result column="password" jdbcType="VARCHAR" property="password" />
     <result column="sex" jdbcType="VARCHAR" property="sex" />
+    <result column="images" jdbcType="VARCHAR" property="images" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -67,7 +68,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, name, account, password, sex
+    id, name, account, password, sex, images
   </sql>
   <select id="selectByExample" parameterType="com.example.demo.model.BizUserExample" resultMap="BaseResultMap">
     select
@@ -102,9 +103,11 @@
   </delete>
   <insert id="insert" parameterType="com.example.demo.model.BizUser">
     insert into biz_user (id, name, account, 
-      password, sex)
+      password, sex, images
+      )
     values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{account,jdbcType=VARCHAR}, 
-      #{password,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR})
+      #{password,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR}, #{images,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.example.demo.model.BizUser">
     insert into biz_user
@@ -124,6 +127,9 @@
       <if test="sex != null">
         sex,
       </if>
+      <if test="images != null">
+        images,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -140,6 +146,9 @@
       </if>
       <if test="sex != null">
         #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="images != null">
+        #{images,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -167,6 +176,9 @@
       <if test="record.sex != null">
         sex = #{record.sex,jdbcType=VARCHAR},
       </if>
+      <if test="record.images != null">
+        images = #{record.images,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -178,7 +190,8 @@
       name = #{record.name,jdbcType=VARCHAR},
       account = #{record.account,jdbcType=VARCHAR},
       password = #{record.password,jdbcType=VARCHAR},
-      sex = #{record.sex,jdbcType=VARCHAR}
+      sex = #{record.sex,jdbcType=VARCHAR},
+      images = #{record.images,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -198,6 +211,9 @@
       <if test="sex != null">
         sex = #{sex,jdbcType=VARCHAR},
       </if>
+      <if test="images != null">
+        images = #{images,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -206,7 +222,8 @@
     set name = #{name,jdbcType=VARCHAR},
       account = #{account,jdbcType=VARCHAR},
       password = #{password,jdbcType=VARCHAR},
-      sex = #{sex,jdbcType=VARCHAR}
+      sex = #{sex,jdbcType=VARCHAR},
+      images = #{images,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>
