@@ -46,5 +46,30 @@ public class UserServiceImpl implements UserService{
 		return selectByExample(record);
 		
 	}
+
+	@Override
+	public int updateByPrimaryKeySelective(BizUser record) {
+		
+		return bizUserMapper.updateByPrimaryKeySelective(record);
+	}
+
+	@Override
+	public int deleteByPrimaryKey(Integer id) {
+		return bizUserMapper.deleteByPrimaryKey(id);
+	}
+
+	@Override
+	public BizUser loadUserByUsername(String username) {
+		BizUserExample example = new BizUserExample();
+		Criteria createCriteria = example.createCriteria();
+		if(username != null) {
+			createCriteria.andNameEqualTo(username);
+		}
+		List<BizUser> selectByExample = bizUserMapper.selectByExample(example);
+		if(!selectByExample.isEmpty()) {
+			return selectByExample.get(0);
+		}
+		return null;
+	}
 	
 }
