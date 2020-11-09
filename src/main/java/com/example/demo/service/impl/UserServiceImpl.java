@@ -11,6 +11,7 @@ import com.example.demo.model.BizUser;
 import com.example.demo.model.BizUserExample;
 import com.example.demo.model.BizUserExample.Criteria;
 import com.example.demo.service.UserService;
+import com.example.demo.utils.MD5Util;
 
 @Transactional(rollbackFor = Exception.class)
 @Service
@@ -21,6 +22,8 @@ public class UserServiceImpl implements UserService{
 	
 	@Override
 	public int insert(BizUser record) {
+		String password = record.getPassword();
+		record.setPassword(MD5Util.getMD5Str(password));
 		return bizUserMapper.insert(record);
 	}
 
@@ -68,6 +71,25 @@ public class UserServiceImpl implements UserService{
 		List<BizUser> selectByExample = bizUserMapper.selectByExample(example);
 		if(!selectByExample.isEmpty()) {
 			return selectByExample.get(0);
+		}
+		return null;
+	}
+
+	@Override
+	public BizUser doLogin(BizUser record) {
+		
+		BizUserExample example = new BizUserExample();
+		Criteria createCriteria = example.createCriteria();
+		if(record.getAccount() != null) {
+			createCriteria.andAccountEqualTo(record.getAccount());
+		}
+		List<BizUser> selectByExample = bizUserMapper.selectByExample(example);
+		if(!selectByExample.isEmpty()) {
+			String password = selectByExample.get(0).getPassword();
+			String md5Str = MD5Util.getMD5Str(record.getPassword());
+			if(password.equals(md5Str)) {
+				return selectByExample.get(0);
+			}
 		}
 		return null;
 	}

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.demo.model.BizUser;
 import com.example.demo.service.UserService;
+import com.example.demo.utils.ResponseData;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -21,6 +22,25 @@ public class UserController {
 	
 	@Autowired
 	private UserService userService;
+	
+	@ApiOperation("用户登录")	
+	@GetMapping(value="/doLogin")
+    @ResponseBody
+	public ResponseData doLogin(BizUser record) {
+		ResponseData responseData = new ResponseData();
+		BizUser doLogin = userService.doLogin(record);
+		if(doLogin != null) {
+			responseData.setCode("200");
+			responseData.setObject(doLogin);
+			responseData.setMsg("登录成功");
+		}else {
+			responseData.setCode("400");
+			responseData.setObject(null);
+			responseData.setMsg("登录失败");
+		}
+		return responseData;
+		
+	}
 	
 	@ApiOperation("创建用户")	
 	@GetMapping(value="/insert")

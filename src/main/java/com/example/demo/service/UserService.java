@@ -16,5 +16,7 @@ public interface UserService {
 	
 	BizUser loadUserByUsername(String username);
 	
+	BizUser doLogin(BizUser record);
+	
 	public List<BizUser> testVin(String paramString);
 }
