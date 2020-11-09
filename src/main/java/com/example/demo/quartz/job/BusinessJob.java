@@ -13,7 +13,7 @@ import org.quartz.JobExecutionException;
 import com.example.demo.model.BizQuartz;
 import com.example.demo.model.BizUser;
 import com.example.demo.quartz.schedulerJob.CronSchedulerJob;
-import com.example.demo.utils.SpringUtil;
+import com.example.demo.utils.BeanLocator;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -32,11 +32,10 @@ public class BusinessJob implements Job {
 		
 		try {
             // 执行任务
-            log.info("任务准备执行，任务名称：{}", bizQuartz.getQuartzName());
-            
-            Class beanClass = SpringUtil.getBean(bizQuartz.getBeanName()).getClass();
-            Method method = beanClass.getMethod(bizQuartz.getMethodName(), new Class[] {String.class});
-            List<BizUser> resultBizUsers = (List<BizUser>)method.invoke(SpringUtil.getBean(bizQuartz.getBeanName()), new Object[] {new String(bizQuartz.getParams())});
+            Class<?> forName = Class.forName(bizQuartz.getBeanName());
+//            Class beanClass = BeanLocator.getBean(bizQuartz.getBeanName()).getClass();
+            Method method = forName.getMethod(bizQuartz.getMethodName(), new Class[] {String.class});
+            List<BizUser> resultBizUsers = (List<BizUser>)method.invoke(BeanLocator.getBean(forName), new Object[] {new String(bizQuartz.getParams())});
             long times = System.currentTimeMillis() - startTime;
             log.info("任务执行完毕，任务名称：{} 总共耗时：{} 毫秒，得到结果集：{}", bizQuartz.getQuartzName(), times, resultBizUsers);
             
