@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 import java.util.List;
 
+import com.example.demo.entity.PageResult;
 import com.example.demo.model.BizUser;
 
 public interface UserService {
@@ -19,4 +20,6 @@ public interface UserService {
 	BizUser doLogin(BizUser record);
 	
 	public List<BizUser> testVin(String paramString);
+
+	PageResult selectByPage(BizUser record);
 }

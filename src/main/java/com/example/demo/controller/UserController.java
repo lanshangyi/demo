@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.example.demo.entity.PageResult;
 import com.example.demo.model.BizUser;
 import com.example.demo.service.UserService;
 import com.example.demo.utils.ResponseData;
@@ -55,6 +56,14 @@ public class UserController {
     @ResponseBody
 	public List<BizUser> all(BizUser record) {
 		return userService.selectByExample(record);
+		
+	}
+	
+	@ApiOperation("分页获取用户")	
+	@GetMapping(value="/pageList")
+    @ResponseBody
+	public PageResult selectByPage(BizUser record) {
+		return userService.selectByPage(record);
 		
 	}
 }

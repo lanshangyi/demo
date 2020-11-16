@@ -1,6 +1,8 @@
 package com.example.demo.model;
 
-public class BizUser {
+import com.example.demo.entity.PageRequest;
+
+public class BizUser extends PageRequest{
     private Integer id;
 
     private String name;

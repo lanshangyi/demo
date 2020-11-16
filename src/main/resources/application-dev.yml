@@ -23,4 +23,11 @@ mybatis:
 logging:
   level:
      com.example.demo.dao : debug
+     
+# pagehelper   
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql     
 

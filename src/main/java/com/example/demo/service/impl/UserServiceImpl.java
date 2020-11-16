@@ -7,11 +7,16 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.demo.dao.BizUserMapper;
+import com.example.demo.entity.PageRequest;
+import com.example.demo.entity.PageResult;
 import com.example.demo.model.BizUser;
 import com.example.demo.model.BizUserExample;
 import com.example.demo.model.BizUserExample.Criteria;
 import com.example.demo.service.UserService;
 import com.example.demo.utils.MD5Util;
+import com.example.demo.utils.PageUtils;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 
 @Transactional(rollbackFor = Exception.class)
 @Service
@@ -93,5 +98,34 @@ public class UserServiceImpl implements UserService{
 		}
 		return null;
 	}
+	
+	@Override
+	public PageResult selectByPage(BizUser record) {
+		
+		return PageUtils.getPageResult(record, getPageInfo(record));
+	}
+	
+	/**
+     * 调用分页插件完成分页
+     * @param pageQuery
+     * @return
+     */
+    private PageInfo<BizUser> getPageInfo(BizUser bizUser) {
+        int pageNum = bizUser.getPageNum();
+        int pageSize = bizUser.getPageSize();
+        PageHelper.startPage(pageNum, pageSize);
+        
+        BizUserExample example = new BizUserExample();
+		Criteria createCriteria = example.createCriteria();
+		if(bizUser.getId() != null) {
+			createCriteria.andIdEqualTo(bizUser.getId());
+		}
+		if(bizUser.getName() != null) {
+			createCriteria.andNameEqualTo(bizUser.getName());
+		}
+        List<BizUser> sysMenus = bizUserMapper.selectByExample(example);
+        return new PageInfo<BizUser>(sysMenus);
+        
+    }
 	
 }
