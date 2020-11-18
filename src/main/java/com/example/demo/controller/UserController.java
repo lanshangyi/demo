@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.demo.entity.PageResult;
 import com.example.demo.model.BizUser;
+import com.example.demo.service.LoginWebSocketServer;
 import com.example.demo.service.UserService;
 import com.example.demo.utils.ResponseData;
 
@@ -23,6 +24,25 @@ public class UserController {
 	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private LoginWebSocketServer loginWebSocketServer;
+	
+	@ApiOperation("检查用户登录")	
+	@GetMapping(value="/checkUserLogin")
+    @ResponseBody
+	public ResponseData checkUserLogin(BizUser record) {
+		ResponseData responseData = new ResponseData();
+		
+		Boolean userSocket = loginWebSocketServer.getUserSocket(record.getAccount());
+		
+		responseData.setCode("200");
+		responseData.setObject(userSocket);
+		responseData.setMsg("校验成功");
+		
+		return responseData;
+		
+	}
 	
 	@ApiOperation("用户登录")	
 	@GetMapping(value="/doLogin")

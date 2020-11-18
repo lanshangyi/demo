@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <script src="http://cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+    <script src="../login.js"></script>
+    <title>随意页</title>
+    <script type="text/javascript">
+        	var websocket;
+            $(function() {
+            	var retval = "";
+            	var sHref = window.location.href;
+            	var args = sHref.split("?");
+            	var str = args[1];
+            	args = str.split("&");
+            	for(var i = 0; i < args.length; i++ ){
+            	　　	str = args[i];
+            	　　	var arg = str.split("=");
+            	　　	if(arg.length <= 1) continue;
+            	　　	if(arg[0] == "userName") retval = arg[1];
+            	}
+            	
+            	if('WebSocket' in window) {
+                    console.log("此浏览器支持websocket");
+                   // websocket = new WebSocket("ws://lshangyi.qicp.vip/websocket/"+$('#sid').val());
+                  	websocket = new WebSocket("ws://localhost:9512/loginWebsocket/"+retval);
+                } else if('MozWebSocket' in window) {
+                    alert("此浏览器只支持MozWebSocket");
+                } else {
+                    alert("此浏览器只支持SockJS");
+                }
+            	
+                websocket.onopen = function(evnt) {
+                    //$("#tou").html("链接服务器成功!")
+                    alert("登录成功,欢迎你 "+retval+" 先生");
+                };
+                
+                websocket.onmessage = function(evnt) {
+                	
+                	var d = evnt.data;
+                	if(d.indexOf("out") != -1){
+                		alert("您被踢下线");
+                		var path = "http://"+window.location.host;
+                		window.location.href = path+ '/login.html';
+                	}
+                };
+                
+                websocket.onerror = function(evnt) {};
+                
+                websocket.onclose = function(evnt) {
+                    //$("#tou").html("与服务器断开了链接!")
+                	alert("您被踢下线");
+                }
+            });
+            
+            function guid() {
+            	return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+            		var r = Math.random() * 16 | 0,
+            			v = c == 'x' ? r : (r & 0x3 | 0x8);
+            		return v.toString(16);
+            	});
+            }
+        </script>
+</head>
+<body>
+    
+    <iframe src="userInfo.html" frameborder="0" style="position:fixed; left:0px; top:0px; width:100%; height:100%;"></iframe>
+  
+</body>
+</html>

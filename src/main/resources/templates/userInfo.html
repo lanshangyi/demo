@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <script src="http://cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+    <script src="../login.js"></script>
+    <title>随意的用户信息页</title>
+    <style>
+    	html,body{
+			width:100%;
+			height:100%
+		}
+    	body {
+    		background-image: url('../img104.jpg');
+    		background-size: 100% 100%;
+    		background-repeat: no-repeat;
+    	}
+    	.div_bo {
+    		width: 400px;
+    		height: 250px;
+    		position: absolute;
+    		left: 37%;
+			top: 33%;
+			text-align: center;
+            /*边框*/
+            border: solid 1px rgba(102, 146, 191, 0.68);
+            /*边角弧度*/
+            border-radius: 10px;
+            /*阴影*/
+            -moz-box-shadow:2px 2px 5px #333333; 
+            -webkit-box-shadow:2px 2px 5px #333333; 
+            box-shadow: 7px 15px 30px #285a63;
+    	}
+    	.p1 {
+    		padding-top: 50px;
+    	}
+    	input{
+		    outline-style: none ;
+		    border: 0px;
+		    border: 1px solid #ccc;
+		    border-radius: 3px;
+		    padding: 5px 5px;
+		    font-size: 15px;
+		    font-family: "Microsoft soft";
+		}
+		input:focus{
+		    border-color: #66afe9;
+		    outline: 0;
+		    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6);
+		    box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6)
+		}
+		input[type=button]:hover,input[type=button]:active{background-color:#b5aeae}
+		.span_css {
+			position: absolute;
+    		left: 300px;
+    		top: 177px;
+    		font-size: 10px;
+		}
+    </style>
+</head>
+<body style="width:98%; height:98%;">
+    <div style="width:98%; height:98%; display:block; overflow:hidden; position:fixed; left:0px; top:0px; background-size:100% 100%; color:#fff; ">
+    	<div class="div_bo">
+    		<p class="p1">
+    			<span>用户名</span>：<input type="text" id="username" name="username" disabled="disabled"/>
+    		</p>
+    		<p>
+    			<span style="margin-right: 16px;">密码</span>：<input type="password" id="password" name="password" disabled="disabled"/>
+    		</p>
+    		<p>
+    			性别<span style="margin-left: 16px;">：</span><input id="man" type="radio" checked="checked" name="1" disabled="disabled"/>男<input id="woman" type="radio"  name="1" disabled="disabled"/>女
+    		</p>
+    	</div>
+    </div>
+</body>
+</html>

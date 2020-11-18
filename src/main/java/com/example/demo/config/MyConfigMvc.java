@@ -26,6 +26,8 @@ public class MyConfigMvc extends WebMvcConfigurerAdapter {
                 registry.addViewController("/quartz.html").setViewName("/quartz");
                 registry.addViewController("/login.html").setViewName("/login");
                 registry.addViewController("/register.html").setViewName("/register");
+                registry.addViewController("/userInfo.html").setViewName("/userInfo");
+                registry.addViewController("/template.html").setViewName("/template");
                 //配置springboot直接访问静态html页面，不经过controller
                 //配置之后，发送/loginAndRegister.html，就相当于在controller中return "loginAndRegister"
                 registry.addViewController("/loginAndRegister.html").setViewName("/loginAndRegister");
